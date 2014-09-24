@@ -1,0 +1,31 @@
+Text = "Mathan Kumar";
+letters = Text.split("");
+letterformat = new TextFormat();
+letterformat.font = "Trebuchet MS";
+letterformat.align = "center";
+letterformat.size = "14";
+letterformat.color = 0xffffff;
+letterformat.bold = true;
+spacing = 6;
+speed = 4;
+for (var LTR = 0; LTR<letters.length; LTR++) {
+        mc = _root.createEmptyMovieClip(LTR+"l", LTR);
+        mc.createTextField(letters[LTR]+"t", LTR, LTR*spacing, 10, 20, 20);
+        with (mc[letters[LTR]+"t"]) {
+                text = letters[LTR];
+                setTextFormat(letterformat);
+                selectable = false;
+        }
+        if (LTR) {
+                mc.prevClip = _root[(LTR-1)+"l"];
+                mc.onEnterFrame = function() {
+                        this._x += (this.prevClip._x-this._x+5)/speed;
+                        this._y += (this.prevClip._y-this._y)/speed;
+                };
+        } else {
+                mc.onEnterFrame = function() {
+                        this._x += (_root._xmouse-this._x+10)/speed;
+                        this._y += (_root._ymouse-this._y)/speed;
+                };
+        }
+}
